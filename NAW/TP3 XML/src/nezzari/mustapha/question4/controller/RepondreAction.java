@@ -12,8 +12,9 @@ public class RepondreAction extends AbstractAction {
 
 	protected GameFrame gameFrame;
 
-	public RepondreAction(GameFrame gameFrame) {
+	public RepondreAction(GameFrame gameFrame, String name) {
 		this.gameFrame = gameFrame;
+		putValue(NAME, name);
 	}
 
 	@Override

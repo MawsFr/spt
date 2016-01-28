@@ -26,6 +26,8 @@ public class QuizzPanel extends JPanel {
 
 	protected CustomJButton buttonNextQuestion;
 	protected List<CustomJButton> buttonReponse;
+	
+	protected int selectAnswer;
 
 	protected GameFrame gameFrame;
 
@@ -100,17 +102,10 @@ public class QuizzPanel extends JPanel {
 		
 		Question cq = quizz.getQuestion(currentQuestion);
 		for(int i = 0; i < cq.getNbAnswers(); i++) {
-			CustomJButton button = new CustomJButton(new RepondreAction(gameFrame));
-			button.setId(i);
-			buttonReponse.add(button);
+			buttonReponse.add(new CustomSelectableJButton(new RepondreAction(gameFrame, cq.getAnswer(i))));
 		}
 		
 		repaint();
-		
-	}
-
-	
-	public void reply(int i) {
 		
 	}
 

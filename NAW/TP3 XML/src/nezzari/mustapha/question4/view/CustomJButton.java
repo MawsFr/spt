@@ -21,6 +21,7 @@ public class CustomJButton extends JButton {
 
 	protected CustomJButton(BufferedImage image, AbstractAction action) {
 		this(action);
+		
 		this.image = image;
 		imageRolledOver = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 		imageRolledOver.createGraphics().drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
