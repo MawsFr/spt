@@ -1,4 +1,4 @@
-package nezzari.mustapha.question4.model;
+package nezzari.mustapha.question4.projet.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +33,40 @@ public class Quizz {
 		return this.questions.size();
 	}
 	
+	public int getNbRightAnswers() {
+		int score = 0;
+		for(Question q : questions) {
+			for(Answer a : q.getAnswers()) {
+				if(a.isRightAnswer() && a.isSelected())
+					score++;
+			}
+		}
+		
+		return score;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	
 	@Override
 	public String toString() {
-		String s = title + "\n";
+//		String s = title + "\n";
+//		for(Question q : questions) {
+//			s += q.toString() + "\n";
+//		}
+//		return s;
+		return title;
+	}
+
+	public List<Question> getQuestions() {
+		return this.questions;
+	}
+
+	public void reset() {
 		for(Question q : questions) {
-			s += q.toString() + "\n";
-		}
-		return s;
+			q.reset();
+		}		
 	}
 	
 	

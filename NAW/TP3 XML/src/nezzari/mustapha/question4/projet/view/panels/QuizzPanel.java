@@ -1,9 +1,11 @@
-package nezzari.mustapha.question4.view;
+package nezzari.mustapha.question4.projet.view.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,23 +14,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import nezzari.mustapha.question4.controller.NextQuestionAction;
-import nezzari.mustapha.question4.controller.RepondreAction;
-import nezzari.mustapha.question4.model.Question;
-import nezzari.mustapha.question4.model.Quizz;
+import nezzari.mustapha.question4.projet.controller.NextQuestionAction;
+import nezzari.mustapha.question4.projet.model.Question;
+import nezzari.mustapha.question4.projet.model.Quizz;
+import nezzari.mustapha.question4.projet.view.GameFrame;
+import nezzari.mustapha.question4.projet.view.Tools;
+import nezzari.mustapha.question4.projet.view.customcomponents.CustomJButton;
+import nezzari.mustapha.question4.projet.view.customcomponents.CustomSelectableJButton;
 
 public class QuizzPanel extends JPanel {
 	private static final long serialVersionUID = -3884125178539913282L;
 	
-	protected Quizz quizz;
+	
 	protected int currentQuestion;
 	protected JTextArea questionArea;
 
 	protected CustomJButton buttonNextQuestion;
-	protected List<CustomJButton> buttonReponse;
+	protected List<CustomSelectableJButton> buttonAnswer;
 	
-	protected int selectAnswer;
-
 	protected GameFrame gameFrame;
 
 	public QuizzPanel(GameFrame gameFrame) {
@@ -36,6 +39,8 @@ public class QuizzPanel extends JPanel {
 		this.setLayout(null);
 		setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
 		setSize(getPreferredSize());
+		setOpaque(false);
+		setBorder(BorderFactory.createEmptyBorder());
 		
 		buttonNextQuestion = new CustomJButton(new NextQuestionAction(gameFrame));
 		buttonNextQuestion.setBounds(GameFrame.WIDTH - 190 - 190 / 4, GameFrame.HEIGHT - 92 - 92/ 2, 190, 92);
@@ -55,19 +60,21 @@ public class QuizzPanel extends JPanel {
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.getViewport().setBackground(Color.WHITE);
 		
-		buttonReponse = new ArrayList<CustomJButton>();
-		init();
+		buttonAnswer = new ArrayList<CustomSelectableJButton>();
 		this.add(buttonNextQuestion);
 		this.add(scroll);
+		
+		Tools.addBackToMenuButton(gameFrame, this);
 	}
 	
 	public void init() {
-		buttonReponse.clear();
+		getCurrentQuizz().reset();
+		buttonNextQuestion.setText("Question suivante");
 		this.currentQuestion = -1;
 	}
 	
 	public void setQuizz(Quizz quizz) {
-		this.quizz = quizz;
+		this.gameFrame.getQuizzManager().setCurrentQuizz(quizz);
 	}
 	
 	@Override
@@ -87,26 +94,62 @@ public class QuizzPanel extends JPanel {
 		
 	}
 
-	public void nextQuizz() {
-		if(currentQuestion == quizz.getNbQuestions() - 2) {
+	public void nextQuestion() {
+		if(currentQuestion == getCurrentQuizz().getNbQuestions() - 2) {
 			buttonNextQuestion.setText("Finir le questionnaire");
 			++currentQuestion;
-		} else if(currentQuestion >= quizz.getNbQuestions() - 1) {
+		} else if(currentQuestion >= getCurrentQuizz().getNbQuestions() - 1) {
 			gameFrame.getGamePanel().showView(GamePanel.SCORE_PANEL);
+			gameFrame.getGamePanel().getScorePanel().calculateScore();
+			return;
 		} else {
 			++currentQuestion;
 		}
 		
-		questionArea.setText(quizz.getQuestion(currentQuestion).getQuestion());
+		questionArea.setText(getCurrentQuizz().getQuestion(currentQuestion).getQuestion());
 		questionArea.setCaretPosition(0);
 		
-		Question cq = quizz.getQuestion(currentQuestion);
+		for(CustomJButton cjb : buttonAnswer) {
+			this.remove(cjb);
+		}
+		
+		buttonAnswer.clear();
+		Question cq = getCurrentQuizz().getQuestion(currentQuestion);
 		for(int i = 0; i < cq.getNbAnswers(); i++) {
-			buttonReponse.add(new CustomSelectableJButton(new RepondreAction(gameFrame, cq.getAnswer(i))));
+			CustomSelectableJButton selectableButton = new CustomSelectableJButton(cq.getAnswer(i).toString());
+			selectableButton.setBounds((i * 150) + 30, 215, 140, 100);
+			selectableButton.setId(i);
+			this.add(selectableButton);
+			
+			selectableButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectableButton.select(!selectableButton.selected());
+					cq.getAnswer(selectableButton.getId()).setSelected(selectableButton.selected());
+					for(CustomSelectableJButton csb : buttonAnswer) {
+						if(csb != selectableButton) {
+							csb.select(false);
+							cq.getAnswer(csb.getId()).setSelected(false);
+							csb.repaint();
+						}
+					}
+				}
+			});
+			
+			buttonAnswer.add(selectableButton);
 		}
 		
 		repaint();
 		
 	}
+	
+	public Quizz getCurrentQuizz() {
+		return gameFrame.getQuizzManager().getCurrentQuizz();
+	}
 
+	public Question getCurrentQuestion() {
+		return this.getCurrentQuizz().getQuestion(currentQuestion);
+	}
+	
 }

@@ -1,16 +1,16 @@
-package nezzari.mustapha.question4.view;
+package nezzari.mustapha.question4.projet.view.panels;
 
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import nezzari.mustapha.question4.controller.OuvrirQuestionnaireAction;
-import nezzari.mustapha.question4.controller.PlayAction;
+import nezzari.mustapha.question4.projet.controller.OuvrirQuestionnaireAction;
+import nezzari.mustapha.question4.projet.controller.PlayAction;
+import nezzari.mustapha.question4.projet.view.GameFrame;
+import nezzari.mustapha.question4.projet.view.Tools;
+import nezzari.mustapha.question4.projet.view.customcomponents.CustomJButton;
 
 public class MenuPanel extends JPanel {
 	private static final long serialVersionUID = -373881337109291940L;
@@ -18,6 +18,7 @@ public class MenuPanel extends JPanel {
 	protected GameFrame gameFrame;
 	protected CustomJButton buttonOpen;
 	protected CustomJButton buttonPlay;
+	protected boolean shouldReload;
 
 	public MenuPanel(GameFrame gameFrame) {
 		this.gameFrame = gameFrame;
@@ -27,14 +28,10 @@ public class MenuPanel extends JPanel {
 		Insets insets = gameFrame.getGamePanel().getInsets();
 		buttonOpen.setBounds(insets.left + GameFrame.WIDTH/2 - 250 / 2, insets.top + GameFrame.HEIGHT / 2 - 100 / 2, 250, 100);
 
-		BufferedImage buttonIcon = null;
-		try {
-			buttonIcon = ImageIO.read(new File("images/boutonPlay.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		buttonPlay = new CustomJButton(buttonIcon, new PlayAction(gameFrame));
+		buttonPlay = new CustomJButton(Tools.buttonIcon, new PlayAction(gameFrame));
 		buttonPlay.setBounds(GameFrame.WIDTH - 190 - 190 / 4, GameFrame.HEIGHT - 92 - 92/ 2, 190, 92);
+		setOpaque(false);
+		setBorder(BorderFactory.createEmptyBorder());
 		init();
 		this.add(buttonOpen);
 		this.add(buttonPlay);
