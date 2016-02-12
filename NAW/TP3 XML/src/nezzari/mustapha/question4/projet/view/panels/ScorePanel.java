@@ -109,6 +109,7 @@ public class ScorePanel extends JPanel {
 		JScrollPane scroll = new JScrollPane(centerPanel);
 		centerPanel.setOpaque(false);
 		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
 		centerPanel.setBorder(BorderFactory.createEmptyBorder());
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.setBounds(10, 60, GameFrame.WIDTH - 10, GameFrame.HEIGHT - 60);

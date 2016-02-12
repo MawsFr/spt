@@ -18,6 +18,7 @@ public class QuizzCellRenderer extends JLabel implements ListCellRenderer<Quizz>
 	
 	public QuizzCellRenderer() {
 		setIcon(Tools.icone);
+		setOpaque(false);
 	}
 
 	@Override

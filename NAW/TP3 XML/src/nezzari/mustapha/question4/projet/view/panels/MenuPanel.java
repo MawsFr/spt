@@ -1,5 +1,6 @@
 package nezzari.mustapha.question4.projet.view.panels;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
 
@@ -47,7 +48,10 @@ public class MenuPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Tools.drawPanelBackground(g, this);
-
+		g.setColor(Color.BLACK);
+		g.fillRect(0, GameFrame.HEIGHT - 20, GameFrame.WIDTH + 20, 20);
+		g.setColor(Color.WHITE);
+		g.drawString("Mustapha NEZZARI", GameFrame.WIDTH - 120, GameFrame.HEIGHT - 7);
 	}
 	
 	public CustomJButton getButtonPlay() {

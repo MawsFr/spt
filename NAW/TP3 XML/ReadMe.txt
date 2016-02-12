@@ -13,3 +13,4 @@ Voici comment le logiciel fonctionne :
 - Vous pouvez passer au quizz suivant ou revenir à la sélection de quizz
 
 NB : Si le coté interface graphique ne vous intéresse pas spécialement, regardez du coté des classes du package “model”. Elle représentent l’intelligence du jeu, en particulier la classe QuizzManager qui contient la fonction load() qui charge le fichier xml.
+NB2 : Si le projet rame un peu, c'est surement à cause des animations (inutiles je vous l'accorde) que vous pouvez desactiver grace au boolean "animated" dans la classe "Tools", qu'il faut bien sur mettre à false. 

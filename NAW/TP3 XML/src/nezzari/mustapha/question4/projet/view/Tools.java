@@ -31,6 +31,8 @@ public class Tools {
 	public static BufferedImage voirQuizz;
 	public static BufferedImage buttonIcon;
 	public static ImageIcon icone;
+	
+	public static int ANIMATION_SPEED = 1;
 
 
 	protected static Font f2 = new Font("PT Serif", Font.BOLD, 30);
@@ -62,7 +64,11 @@ public class Tools {
 			voirQuizz = ImageIO.read(new File("images/voirQuizz.png"));
 			icone = new ImageIcon("images/icone.png");
 			buttonIcon = ImageIO.read(new File("images/boutonPlay.png"));
-			timer = new Timer(1, new ActionListener() {
+			if(System.getProperty("os.name").equalsIgnoreCase("Linux")) {
+				ANIMATION_SPEED = 3;
+			}
+			
+			timer = new Timer(ANIMATION_SPEED, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					++xHor;
@@ -100,8 +106,10 @@ public class Tools {
 
 		g.setColor(GREEN);
 
-		g.fillRect(xHor, yHor, tileSize, tileSize);
-		g.fillRect(xVert, yVert, tileSize, tileSize);
+		if(animated){
+			g.fillRect(xHor, yHor, tileSize, tileSize);
+			g.fillRect(xVert, yVert, tileSize, tileSize);
+		}
 
 		g.fillRect(0, 0, c.getWidth(), 105 / 2);
 

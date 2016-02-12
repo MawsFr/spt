@@ -35,8 +35,8 @@ public class SelectionPanel extends JPanel {
 //		
 //		quizzSelectionPanel.setOpaque(false);
 //		quizzSelectionPanel.setBorder(BorderFactory.createEmptyBorder());
-//	    setOpaque(false);
-//		setBorder(BorderFactory.createEmptyBorder());
+	    setOpaque(false);
+		setBorder(BorderFactory.createEmptyBorder());
 		
 		buttonPlay = new CustomJButton(Tools.buttonIcon, new PlayAction(gameFrame));
 		buttonPlay.setBounds(GameFrame.WIDTH - 190 - 190 / 4, GameFrame.HEIGHT - 92 - 92/ 2, 190, 92);
@@ -67,6 +67,7 @@ public class SelectionPanel extends JPanel {
 
 		JScrollPane scroll = new JScrollPane(quizzSelectionList);
 		
+		scroll.getViewport().setOpaque(false);
 		scroll.setOpaque(false);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		this.setLayout(null);
