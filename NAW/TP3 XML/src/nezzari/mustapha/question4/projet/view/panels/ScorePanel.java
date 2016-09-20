@@ -40,7 +40,7 @@ public class ScorePanel extends JPanel {
 	protected Quizz currentQuizz;
 
 
-	public ScorePanel(GameFrame gameFrame) {
+	public ScorePanel(final GameFrame gameFrame) {
 		this.gameFrame = gameFrame;
 		questionPanels = new ArrayList<JPanel>();
 		scoreLabel = new JLabel();

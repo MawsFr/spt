@@ -114,9 +114,9 @@ public class QuizzPanel extends JPanel {
 		}
 		
 		buttonAnswer.clear();
-		Question cq = getCurrentQuizz().getQuestion(currentQuestion);
+		final Question cq = getCurrentQuizz().getQuestion(currentQuestion);
 		for(int i = 0; i < cq.getNbAnswers(); i++) {
-			CustomSelectableJButton selectableButton = new CustomSelectableJButton(cq.getAnswer(i).toString());
+			final CustomSelectableJButton selectableButton = new CustomSelectableJButton(cq.getAnswer(i).toString());
 			selectableButton.setBounds((i * 150) + 30, 215, 140, 100);
 			selectableButton.setId(i);
 			this.add(selectableButton);

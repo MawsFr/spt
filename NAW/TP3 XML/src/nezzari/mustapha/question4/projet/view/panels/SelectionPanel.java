@@ -27,7 +27,7 @@ public class SelectionPanel extends JPanel {
 	
 
 
-	public SelectionPanel(GameFrame gameFrame) {
+	public SelectionPanel(final GameFrame gameFrame) {
 		this.gameFrame = gameFrame;
 //		quizzSelectionPanel = new JPanel();
 //		quizzSelectionPanel.setLayout(new BoxLayout(quizzSelectionPanel, BoxLayout.PAGE_AXIS));
